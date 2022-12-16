@@ -1,0 +1,48 @@
+version: '3.3'
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+  monogodb:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
+      - MONGO_INITDB_USERNAME=${MONGO_DB_USERNAME}
+      - MONGO_INITDB_PASSWORD=${MONGO_DB_PASSWORD}
+    ports:
+      - 27017:27017
+
+  redis-worker:
+    &redis_worker
+    build:
+      context: .
+      dockerfile: dockerfiles/redis-worker.dockerfile
+    command: rq worker --url redis://redis:6379
+    depends_on:
+      - redis
+
+  redis_worker_1:
+    <<: *redis_worker
+
+  redis_worker_2:
+    <<: *redis_worker
+  redis_worker_3:
+    <<: *redis_worker
+  api:
+    build:
+      context: .
+      dockerfile: dockerfiles/api.dockerfile
+    command: python main.py
+    ports:
+      - 127.0.0.1:8080:8080
+    depends_on:
+      - redis
+      - monogodb

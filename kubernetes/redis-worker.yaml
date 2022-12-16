@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-worker
+  labels:
+    role: worker
+    tier: backend
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: redis-worker
+      role: worker
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: redis-worker
+        role: worker
+        tier: backend
+    spec:
+      containers:
+        - name: redis-worker
+          image: asia.gcr.io/collect-367002/redis-worker:0.3
+          env:
+            - name: REDIS_HOST
+              value: redis-service
+            - name: REDIS_PORT
+              value: "6379"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

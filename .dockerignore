@@ -1,0 +1,13 @@
+dockerfiles
+Pipfile
+Pipfile.lock
+setup.cfg
+.git
+.vscode
+__pycache__
+loadtest
+.gitignore
+.pre-commit-config.yaml
+api_spec.json
+readme.md
+setup.cfg

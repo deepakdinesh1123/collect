@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+rq = "*"
+motor = "*"
+redis = "*"
+twilio = "*"
+python-dotenv = "*"
+gspread = "*"
+fastapi = {extras = ["all"], version = "*"}
+oauth2client = "*"
+sentry-sdk = {extras = ["fastapi"], version = "*"}
+
+[dev-packages]
+pre-commit = "*"
+locust = "*"
+
+[requires]
+python_version = "3.10"
