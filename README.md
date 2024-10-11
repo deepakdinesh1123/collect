@@ -14,7 +14,7 @@ Pending work:
 - The dockerfile has some errors that need to be fixed
 - Add support for validation
 - Modify some of the methods to catch errors in a better way
-- Modify the parameters of sem methods and method calls
+- Modify the parameters of some methods and method calls
 - Fix loadtesting errors
 
 # The API design specification can be found in the file
